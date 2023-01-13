@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import 'tui-image-editor/dist/tui-image-editor.css';
 import './App.css';
-
+import CameraComponent from './Components/CameraComponent';
+import ImageEditor from '@toast-ui/react-image-editor';
 function App() {
+  const [image, setImage] = useState(null);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!image ?
+        <CameraComponent setImage={setImage} /> :
+        <div className="row" style={{ height: '100vh' }}>
+          <ImageEditor
+            includeUI={{
+              loadImage: {
+                path: image,
+                name: 'SampleImage',
+              },
+
+            }}
+            selectionStyle={{
+              cornerSize: 20,
+              rotatingPointOffset: 70,
+            }}
+          />
+        </div>
+      }
     </div>
   );
 }
